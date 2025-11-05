@@ -13,13 +13,13 @@
 }:
 buildPythonPackage rec {
   pname = "realtime-stt";
-  version = "0.1.16";
+  version = "0.1.17-unstable-2024-06-20";
 
   src = fetchFromGitHub {
     owner = "oddlama";
     repo = "RealtimeSTT";
-    rev = "master";
-    hash = "sha256-64RE/aT5PxuFFUTvjNefqTlAKWG1fftKV0wcY/hFlcg=";
+    rev = "41830135f99d7426710aca7d11e2338b9632bb7a";
+    hash = lib.fakeHash;
   };
 
   nativeBuildInputs = [
