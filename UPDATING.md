@@ -2,6 +2,23 @@
 
 This document describes the recent dependency updates and steps to complete the build.
 
+## ⚠️ IMPORTANT: You Must Update flake.lock
+
+The current `flake.lock` is from June 2024 and pins to Python 3.11. After checking out this branch, **you must run `nix flake update`** to get the latest nixpkgs with Python 3.13 and updated dependencies.
+
+## Quick Start (TL;DR)
+
+```bash
+git checkout claude/bump-dependencies-nix-flake-011CUq5KMVe3GXEnQT6KTT4P
+nix flake update                           # Updates Python 3.11 → 3.13
+nix build .#realtime-stt-server            # Get correct hash from error
+# Edit nix/packages/realtime-stt.nix line 22 with the hash from error
+nix build .#realtime-stt-server            # Should succeed now
+nix build .#whisper-overlay                # Build the overlay
+git add flake.lock nix/packages/realtime-stt.nix
+git commit -m "chore: update flake.lock and fix source hash"
+```
+
 ## Changes Made
 
 ### RealtimeSTT Update
@@ -26,7 +43,26 @@ The upstream RealtimeSTT (KoljaB/RealtimeSTT) has progressed to v0.3.104, but it
 
 ## Steps to Complete the Update
 
-### 1. Fix the Source Hash
+### 1. Update Flake Lock (REQUIRED!)
+
+**This step is mandatory** to get Python 3.13 and the latest dependencies:
+
+```bash
+# Check out the branch
+git checkout claude/bump-dependencies-nix-flake-011CUq5KMVe3GXEnQT6KTT4P
+
+# Update all flake inputs to latest versions (this will update nixpkgs to Python 3.13)
+nix flake update
+
+# If direnv is set up, reload it
+direnv allow
+```
+
+This will update:
+- nixpkgs from June 2024 → November 2025 (Python 3.11 → 3.13)
+- All other flake dependencies to their latest versions
+
+### 2. Fix the Source Hash
 
 The Nix package currently uses `lib.fakeHash` as a placeholder. To get the correct hash:
 
@@ -38,17 +74,18 @@ nix build .#realtime-stt-server
 # nix/packages/realtime-stt.nix line 22
 ```
 
+The error will show something like:
+```
+error: hash mismatch in fixed-output derivation
+  specified: sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+  got:       sha256-<THE_CORRECT_HASH_WILL_BE_HERE>
+```
+
+Copy the hash from the "got:" line and update line 22 in `nix/packages/realtime-stt.nix`.
+
 Alternatively, use nix-prefetch:
 ```bash
 nix-prefetch-url --unpack https://github.com/oddlama/RealtimeSTT/archive/41830135f99d7426710aca7d11e2338b9632bb7a.tar.gz
-```
-
-### 2. Update Flake Lock
-
-Update all flake inputs to their latest versions:
-
-```bash
-nix flake update
 ```
 
 ### 3. Test the Build
