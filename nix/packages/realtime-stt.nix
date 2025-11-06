@@ -13,21 +13,23 @@
 }:
 buildPythonPackage rec {
   pname = "realtime-stt";
-  version = "0.1.17-unstable-2024-06-20";
+  version = "0.1.17+unstable.2024.06.20";
+
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "oddlama";
     repo = "RealtimeSTT";
     rev = "41830135f99d7426710aca7d11e2338b9632bb7a";
-    hash = lib.fakeHash;
+    hash = "sha256-64RE/aT5PxuFFUTvjNefqTlAKWG1fftKV0wcY/hFlcg=";
   };
 
-  nativeBuildInputs = [
+  build-system = [
     setuptools
     wheel
   ];
 
-  propagatedBuildInputs = [
+  dependencies = [
     faster-whisper
     pyaudio
     scipy

@@ -33,7 +33,7 @@
       inherit ((builtins.fromTOML (builtins.readFile ../../Cargo.toml)).package) version;
 
       src = ../../.;
-      cargoHash = "sha256-HBbQ14Kxx09qpC5Jwe6mMal0F4NJ+Zb2rl/YvClzVl4=";
+      cargoHash = "sha256-jpfVtV5purGQNr/vS2cbSEYdsRTIXx9+oQfS4SPp3EA=";
 
       nativeBuildInputs = [
         pkgs.pkg-config
