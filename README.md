@@ -1,5 +1,14 @@
 [Quick Start](#-quick-start) \| [Installation](#-installation) \| [Usage](#-usage) \| [Limitations](#-limitations)
 
+> **⚠️ ARCHIVED - GNOME Incompatibility**
+>
+> This fork has been archived as it is **incompatible with GNOME Shell**. whisper-overlay requires the Wayland layer-shell protocol, which GNOME does not implement. This was a valuable learning experience in Nix packaging and maintenance, but ultimately not practical for GNOME users.
+>
+> - ✅ Works on: Sway, Hyprland, and other wlroots-based compositors
+> - ❌ Does NOT work on: GNOME Shell, KDE Plasma
+>
+> If you're on GNOME and need speech-to-text, consider alternatives like Nerd Dictation or Talon Voice.
+
 https://github.com/oddlama/whisper-overlay/assets/31919558/5670df1f-ec46-44f3-ba85-23a7e8d3fd55
 
 [![Crate](https://img.shields.io/crates/v/whisper-overlay.svg)](https://crates.io/crates/whisper-overlay)
